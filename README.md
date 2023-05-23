@@ -10,8 +10,9 @@ This project is a Tasks Worker built with the Netflix Conductor client library t
 
 ## Installation
 1. Edit the application.properties file in the src/main/resources directory with your workflow configuration and Auth0 credentials. Make sure the conductor-url property is set up correctly and points to a running Conductor server instance.
-2. Build the project with Gradle: gradle build
-3. Run the project: java -jar build/libs/your-repo-1.0-SNAPSHOT.jar
+2. Create a new application-local.properties file and provide auth0 credentials: `auth0.client-id` and `auth0.client-secret` 
+3. Build the project with Gradle: gradle build
+4. Run the project: java -jar build/libs/your-repo-1.0-SNAPSHOT.jar
 
 ## Usage
 Once the project is running, it will automatically start listening and executing the tasks defined in the workflow configuration file. If the JWT expires, the Auth0 client will automatically renew it and update the headers for the requests made to the protected endpoint.
