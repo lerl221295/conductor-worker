@@ -9,7 +9,7 @@ This project is a Tasks Worker built with the Netflix Conductor client library t
 
 ## Installation (only once)
 1. Create a new application-local.properties file and provide auth0 credentials: `auth0.client-id` and `auth0.client-secret` 
-2. Run `task setup-conductor` that will pull a local version of Netflix Conductor to be used for local development
+2. Run `task setup-conductor` that will pull Netflix Conductor project to be used for local development
 3. Run `docker compose up` so the instance of Conductor and the Worker get started
 4. Run `task setup-workflow` that will hit Conductor server to create the Workflow Definition. Make sure env `BASIC_AUTH` is exported
 
