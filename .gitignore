@@ -37,3 +37,5 @@ out/
 .vscode/
 
 src/main/resources/application-local.properties
+definitions/workflow-with-auth.json
+nfx-conductor/

@@ -25,7 +25,9 @@ dependencies {
     implementation("com.netflix.conductor:conductor-common:3.13.6")
     implementation("com.auth0:auth0:2.3.0")
     implementation("org.springframework.boot:spring-boot-starter-webflux:3.0.6") // to hit endpoints easily using spring-boot
-    implementation("com.sun.jersey:jersey-core:1.19.4") // fixes an issue where 2 different packages had different versions of this one
+    // fixes an issue where 2 different packages had different versions of this one
+    implementation("com.sun.jersey:jersey-core:1.19.4")
+    implementation("com.sun.jersey:jersey-client:1.19.4")
 }
 
 tasks.withType<KotlinCompile> {

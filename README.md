@@ -3,16 +3,26 @@
 This project is a Tasks Worker built with the Netflix Conductor client library that fetches data from a protected endpoint. It also includes an Auth0 client that renews the JWT when it's expired.
 
 ## Requirements
-* JDK 10 or higher
-* Gradle 6.0 or higher
+* Docker
 * An Auth0 account and API credentials
-* A running instance of Conductor server. To set up Conductor locally, refer to Conductor Setup Guide.
+* Basic auth credentials for reqrepo access
 
-## Installation
-1. Edit the application.properties file in the src/main/resources directory with your workflow configuration and Auth0 credentials. Make sure the conductor-url property is set up correctly and points to a running Conductor server instance.
-2. Create a new application-local.properties file and provide auth0 credentials: `auth0.client-id` and `auth0.client-secret` 
-3. Build the project with Gradle: gradle build
-4. Run the project: java -jar build/libs/your-repo-1.0-SNAPSHOT.jar
+## Installation (only once)
+1. Create a new application-local.properties file and provide auth0 credentials: `auth0.client-id` and `auth0.client-secret` 
+2. Run `task setup-conductor` that will pull a local version of Netflix Conductor to be used for local development
+3. Run `docker compose up` so the instance of Conductor and the Worker get started
+4. Run `task setup-workflow` that will hit Conductor server to create the Workflow Definition. Make sure env `BASIC_AUTH` is exported
+
+## Test
+`task start-wf` will trigger a new workflow
+
+## Run with Docker
+`docker compose up`
+
+## Run app locally
+* `docker compose up conductor-server`
+* Run the app using Gradle or your IDE
+* (Optional) Run the Conductor UI `docker compose up conductor-ui`
 
 ## Usage
 Once the project is running, it will automatically start listening and executing the tasks defined in the workflow configuration file. If the JWT expires, the Auth0 client will automatically renew it and update the headers for the requests made to the protected endpoint.

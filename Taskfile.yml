@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+  setup-workflow:
+    cmds:
+      - '[ -n "${BASIC_AUTH}" ] || (echo "Error: BASIC_AUTH environment variable is not set" && exit 1)'
+      - export BASIC_AUTH=$(echo $BASIC_AUTH | sed 's/\//\\\//g; s/&/\\\\&/g')
+      - sed "s/\${BASIC_AUTH}/$BASIC_AUTH/g" ./definitions/workflow.json > ./definitions/workflow-with-auth.json
+      - 'curl -X PUT -H "Content-Type: application/json" --data @./definitions/workflow-with-auth.json http://localhost:8080/api/metadata/workflow'
+
+  start-wf:
+    cmds:
+     - 'curl -X POST -H "Content-Type: application/json" --data @./definitions/example.json http://localhost:8080/api/workflow/testing_http_task'
+
+  setup-conductor:
+    cmds:
+      - git clone https://github.com/Netflix/conductor.git nfx-conductor
+
+

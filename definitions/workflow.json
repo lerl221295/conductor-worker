@@ -1,0 +1,51 @@
+[{
+  "name": "testing_http_task",
+  "description": "Workflow getting data from reqrepo",
+  "version":  1,
+  "tasks": [
+    {
+      "name": "get_data",
+      "taskReferenceName": "get_data",
+      "inputParameters": {
+        "http_request": {
+          "uri": "https://bff-internal.stg.locusdev.net/v3/requisitions/RQ${workflow.input.rqid}",
+          "method": "GET",
+          "headers": {
+            "Authorization": "Basic ${BASIC_AUTH}"
+          },
+          "connectionTimeOut": "3600",
+          "readTimeOut": "3600"
+        }
+      },
+      "type": "HTTP",
+      "startDelay": 0,
+      "optional": false,
+      "asyncComplete": false
+    },
+    {
+      "name": "ors",
+      "taskReferenceName": "ors",
+      "inputParameters": {
+        "rqid": "${workflow.input.rqid}",
+        "requisition": "${get_data.output.response.body}"
+      },
+      "type": "SIMPLE",
+      "startDelay": 0,
+      "optional": false,
+      "asyncComplete": false
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {
+    "data": "${get_data.output.response.body}",
+    "ors": "${ors.output.result}"
+  },
+  "schemaVersion": 2,
+  "restartable": true,
+  "workflowStatusListenerEnabled": false,
+  "ownerEmail": "example@email.com",
+  "timeoutPolicy": "ALERT_ONLY",
+  "timeoutSeconds": 0,
+  "variables": {},
+  "inputTemplate": {}
+}]
