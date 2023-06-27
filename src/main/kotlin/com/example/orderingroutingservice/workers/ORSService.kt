@@ -55,12 +55,9 @@ class ORSWorker(
     }
 
     override fun execute(task: Task?): TaskResult {
-        val token = auth0Client.jwt // token we can use to hit
-        val client = WebClient.create(opsUrl)
-
-        val response = client.get()
+        val response = WebClient.create(opsUrl).get()
             .uri("/requisitions/${task?.inputData?.get("rqid")}/plan")
-            .header("Authorization", "Bearer $token")
+            .header("Authorization", "Bearer ${auth0Client.jwt}")
             .exchangeToMono { res ->
                 when (res.statusCode()) {
                     HttpStatus.OK -> res.bodyToMono(RQPlan::class.java)
